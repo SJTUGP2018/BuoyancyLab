@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Plugins under Externel
+/Assets/Externel/*
+/Assets/Externel.meta
