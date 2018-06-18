@@ -1203,6 +1203,7 @@ GameObject:
   - component: {fileID: 1830819823}
   - component: {fileID: 1830819822}
   - component: {fileID: 1830819825}
+  - component: {fileID: 1830819826}
   m_Layer: 0
   m_Name: Mesh1 (1)
   m_TagString: Untagged
@@ -2036,12 +2037,26 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1830819816}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ec76dbfaa77c8743ab60caecf35c5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   forceLengthMultiplier: 0.001
+  lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  lineWidth: 0.1
+--- !u!114 &1830819826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1830819816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910fbce0a91c22547b80e57f4c4109b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceLengthMultiplier: 0.0001
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   lineWidth: 0.1
 --- !u!1 &1874292178

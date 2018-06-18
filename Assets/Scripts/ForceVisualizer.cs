@@ -60,6 +60,8 @@ public class ForceVisualizer : MonoBehaviour {
 
     void VisualizeForce(List<ForceOriginPair> forceOriginPairs)
     {
+		if(!this.enabled)	return;
+
         for(int i = 0; i < forceOriginPairs.Count; ++i)
 		{
 			LineRenderer lr = lineRenderers[i];
