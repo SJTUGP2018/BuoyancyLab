@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh11446
+  m_Name: pb_Mesh11316
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -568,50 +568,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &802051540
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 802051541}
-  - component: {fileID: 802051542}
-  m_Layer: 0
-  m_Name: raft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &802051541
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 802051540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.04}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &802051542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 802051540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7bd001498df204688291390e9b78e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raftChild: {fileID: 1090093467516866, guid: 9b21985e9c6aefb4b8dd5ed2ff5041d7, type: 2}
-  number: 0
-  rowSize: 5
-  moveVector: {x: 1, y: 0, z: 2}
 --- !u!1 &926601348
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,12 +866,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b355ffd475eeab04899f03e6cfcd7266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMoving: 0
-  scale: 0
-  speed: 0
-  waveDistance: 0
-  noiseStrength: 0
-  noiseWalk: 0
+  isMoving: 1
+  scale: 0.1
+  speed: 1
+  waveDistance: 1
+  noiseStrength: 1
+  noiseWalk: 1
 --- !u!1 &1528331332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1612127010
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1120,7 +1076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1671468859
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1296,7 +1252,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1768022783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.39, y: 2.27, z: 0.72}
+  m_LocalPosition: {x: -2.73, y: 0.52, z: -0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1854468465}
@@ -1323,7 +1279,7 @@ Rigidbody:
   m_GameObject: {fileID: 1768022783}
   serializedVersion: 2
   m_Mass: 800
-  m_Drag: 1
+  m_Drag: 2.5
   m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
