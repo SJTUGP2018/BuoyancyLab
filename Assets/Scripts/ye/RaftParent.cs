@@ -6,6 +6,8 @@ public class RaftParent : MonoBehaviour {
 
 	public GameObject raftChild;
 
+	public bool timeStop;
+
 	public float number;
 
 	public int rowSize = 5;
@@ -18,7 +20,10 @@ public class RaftParent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Time.timeScale = 0;
+		if(timeStop){
+			Time.timeScale = 0;
+		}
+		
 		initRaftList();
 	}
 	
