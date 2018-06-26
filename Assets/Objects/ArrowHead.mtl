@@ -1,0 +1,5 @@
+newmtl Default_Prototype
+map_Kd -o 0 0 -s 1 1 C:/Ghost/Unity/SE341/BuoyancyLab/Assets/Externel/ProCore/ProBuilder/Resources/Textures/GridBox_Default.png
+Kd 1 1 1
+d 1
+

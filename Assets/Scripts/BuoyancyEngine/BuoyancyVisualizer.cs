@@ -5,13 +5,21 @@ using UnityEngine;
 public class BuoyancyVisualizer : MonoBehaviour {
 	/// Assume using unit cylinder as body.
 	public GameObject arrowBody;
-    public float gravityReferenceLength = 1f;
+	public GameObject arrowHead;
+
+    public float gravityReferenceLength = 5f;
 	public float diameterFactor = 0.1f;
+	public float arrowHeadFactor = 0.2f;
+	public Vector3 arrowHeadComponentFactor = 
+		(Vector3.up + Vector3.forward + Vector3.right);
 
     List<BuoyancyCalculator> calculators;
     List<BuoyancyResult[]> buoyancyResultArrays;
 
+	[HideInInspector]
 	public Transform[] arrowBodies;
+	[HideInInspector]
+	public Transform[] arrowHeads;
 
     Rigidbody rb;
 
@@ -40,14 +48,29 @@ public class BuoyancyVisualizer : MonoBehaviour {
 		}
 
 		arrowBodies = new Transform[2 * totalTriCount];
+		arrowHeads = new Transform[2 * totalTriCount];
+
+		Vector3 arrowHeadScaleVec = new Vector3(arrowHeadFactor, arrowHeadFactor, arrowHeadFactor);
+		arrowHeadScaleVec = Vector3.Scale(arrowHeadScaleVec, arrowHeadComponentFactor);
 
 		// create force arrow prefabs
 		for(int i = 0; i < 2 * totalTriCount; ++i)
 		{
 			GameObject arrowBodyGO = Instantiate(arrowBody, transform.position, 
-				Quaternion.identity);
+				Quaternion.identity, transform);
 			arrowBodyGO.SetActive(false);
 			arrowBodies[i] = arrowBodyGO.transform;
+
+            GameObject arrowHeadGO = Instantiate(arrowHead, transform.position,
+                Quaternion.identity, transform);
+            arrowHeadGO.SetActive(false);
+
+			Transform arrowHeadTrans = arrowHeadGO.transform;
+			arrowHeadTrans.localScale = Vector3.Scale(arrowHeadTrans.localScale,
+                arrowHeadScaleVec);
+
+            arrowHeads[i] = arrowHeadGO.transform;
+			
 		}
 
 
@@ -90,9 +113,9 @@ public class BuoyancyVisualizer : MonoBehaviour {
 		Transform arrowBody = arrowBodies[index];
 
 		Vector3 forceDir = force.normalized;
-		float forceLen = force.magnitude / rbGravity * gravityReferenceLength;
+//		float forceLen = force.magnitude / rbGravity * gravityReferenceLength;
 
-		arrowBody.position = origin;
+		arrowBody.position = origin - forceDir * arrowHeadFactor;
 		arrowBody.localScale = new Vector3(
 			diameterFactor, 
 			force.magnitude / rbGravity * gravityReferenceLength,
@@ -103,6 +126,10 @@ public class BuoyancyVisualizer : MonoBehaviour {
 
 		arrowBody.gameObject.SetActive(true);
 
+		Transform arrowHead = arrowHeads[index];
+		arrowHead.position = origin;
+		arrowHead.up = forceDir;
+		arrowHead.gameObject.SetActive(true);
 
 	}
 
@@ -110,5 +137,28 @@ public class BuoyancyVisualizer : MonoBehaviour {
 	{
         Transform arrowBody = arrowBodies[index];
 		arrowBody.gameObject.SetActive(false);
+		Transform arrowHead = arrowHeads[index];
+		arrowHead.gameObject.SetActive(false);
 	}
+
+
+	void OnDisable()
+	{
+		if(arrowBodies != null)
+		{
+			foreach(Transform body in arrowBodies)
+			{
+				body.gameObject.SetActive(false);
+			}
+		}
+
+        if (arrowHeads != null)
+        {
+            foreach (Transform head in arrowHeads)
+            {
+                head.gameObject.SetActive(false);
+            }
+        }
+	}
+	
 }
