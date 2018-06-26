@@ -32,6 +32,31 @@ public class BuoyancyParallelFor : MonoBehaviour {
     CalculateBuoyancyJob cbjob;
 
 	Rigidbody rb;
+
+	// public OceanHeightMap ocm;
+	// HeightMapDescriptor descriptor
+	// {
+	// 	get
+	// 	{
+	// 		return ocm.descriptor;
+	// 	}
+	// }
+	// NativeArray<float> heightMap
+	// {
+	// 	get
+	// 	{
+	// 		return ocm.m_heightMap;
+	// 	}
+	// }
+	// JobHandle gheightHandle
+	// {
+	// 	get
+	// 	{
+	// 		return ocm.gHeightHandle;
+	// 	}
+	// }
+
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
@@ -56,10 +81,13 @@ public class BuoyancyParallelFor : MonoBehaviour {
 			localToWorldMatrix = transform.localToWorldMatrix,
             results = m_results,
 			rho = 1027f,
-			gravity = 9.81f
+			gravity = 9.81f,
+
+			descriptor = OceanManager.Instance.descriptor,
+			heightMap = OceanManager.Instance.m_heightMap,
 		};
 
-		handle = cbjob.Schedule(triCount, 64);
+		handle = cbjob.Schedule(triCount, 64, OceanManager.Instance.heightMapHandle);
 		
 	}
 
@@ -204,6 +232,13 @@ public class BuoyancyParallelFor : MonoBehaviour {
 		public float gravity;
 
 		public NativeArray<BuoyancyResult> results;
+
+
+		// structs for ocean height map
+		[ReadOnly]
+		public HeightMapDescriptor descriptor;
+		[ReadOnly]
+		public NativeArray<float> heightMap;
 		
         public void Execute(int index)
         {
@@ -325,9 +360,31 @@ public class BuoyancyParallelFor : MonoBehaviour {
 			results[index] = result;
         }
 
+
+		// assume the height map is placed at (0, 0, 0)
+		// and the height map is repeated
 		float GetHeight(Vector3 worldPos)
 		{
-			return worldPos.y;
+			float scaledX = worldPos.x / descriptor.realSize;
+			float scaledZ = worldPos.z / descriptor.realSize;
+
+			float u = scaledX + 0.5f;
+			float v = scaledZ + 0.5f;
+
+			u = u - Mathf.Floor(u);
+			v = v - Mathf.Floor(v);
+			
+			// uv space to height map space
+			int col = (int)Mathf.Round(u * (descriptor.pixelSize - 1));
+			int row_from_bottom = (int)Mathf.Round(v * (descriptor.pixelSize - 1));
+
+			int row = (descriptor.pixelSize - 1) - row_from_bottom;
+
+			float y =  heightMap[row * descriptor.pixelSize + col];
+			// Debug.Log(y);
+
+
+			return worldPos.y - y;
 		}
 
 		void FillResult0(ref Vector3 p1, ref Vector3 p2, ref Vector3 p3, ref BuoyancyResult result)
