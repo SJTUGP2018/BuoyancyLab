@@ -33,6 +33,15 @@ public static class HelperFunc{
 
 	}
 
+	static public bool Equal(float a, int b){
+		if((a - b) > -0.0001 && (a-b) < 0.0001 ){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }
 
 public class BrickBehavior : MonoBehaviour{

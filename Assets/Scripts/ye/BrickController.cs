@@ -16,6 +16,7 @@ public class BrickController : MonoBehaviour {
 
 	public int index = 0;
 
+	[HideInInspector]
 	public GameObject selectedBrick;
 
 	GameObject testBrick;
@@ -42,6 +43,14 @@ public class BrickController : MonoBehaviour {
 
 	Vector3 lastPos;
 
+	SteamVR_TrackedObject trackedObj;
+	public LineRenderer lr;
+
+	void Awake()
+    {
+        trackedObj = GetComponent<SteamVR_TrackedObject>();
+    }
+
 	// Use this for initialization
 	void Start () {
 		selectedBrick = brickList[0];
@@ -55,6 +64,57 @@ public class BrickController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		dr = BrickDetect(transform);
+
+		lr.SetPosition(0, transform.position);
+		lr.SetPosition(1, transform.position + transform.forward * maxDistance);
+
+		SteamVR_Controller.Device device = SteamVR_Controller.Input((int)trackedObj.index);
+
+		dr = BrickDetect(transform);
+
+		if (device.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+			Vector2 pad = device.GetAxis();
+            Vector3 cross = Vector3.Cross(new Vector2(1, 0), pad);
+            float angle = Vector2.Angle(new Vector2(1, 0), pad);
+            float ang = cross.z > 0 ? -angle : angle;
+            Debug.Log(ang);
+            if (ang > 45 && ang < 135)
+            {
+				Debug.Log("down");
+				ChangeBrickDirection(ChangeType.pitchDown);
+                //obj.transform.Translate(Vector3.back * Time.deltaTime * 5);
+            }
+            else if (ang < -45 && ang> -135)
+            {
+				Debug.Log("up");
+				ChangeBrickDirection(ChangeType.pitchUp);
+                //obj.transform.Translate(Vector3.forward * Time.deltaTime * 5);
+            }
+            else if ((ang < 180 && ang> 135) || (ang < -135 && ang > -180))
+            {
+				Debug.Log("left");
+				ChangeBrickDirection(ChangeType.yawUp);
+                //obj.transform.Rotate(Vector3.up * Time.deltaTime * -25);
+            }
+            else if ((ang > 0 && ang< 45) || (ang > -45 && ang< 0)){
+				Debug.Log("right");
+				ChangeBrickDirection(ChangeType.yawDown);
+		    }
+		}
+
+		if(device.GetPressDown(SteamVR_Controller.ButtonMask.Grip)){
+			ChangeBrickType();
+			InstantiateTest();
+		}
+
+		if(device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)){
+			TryAndSetBrick();
+		}
+
+		if(device.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu)){
+			DeleteDetect(transform);
+		}
 
 		if(dr.detectable == true){		
 			testBrick.transform.position = dr.point;
@@ -170,6 +230,19 @@ public class BrickController : MonoBehaviour {
 			detectResult.detectable = false;
 			return detectResult;
 			//return false;
+		}
+	}
+
+	void DeleteDetect(Transform trans){
+		RaycastHit hit;
+		if(Physics.Raycast(trans.position, trans.forward, out hit, Mathf.Infinity, layerMask)){
+			Debug.Log("point: " + hit.point);
+			Debug.Log("normal" + hit.normal);
+
+			Destroy(hit.collider.gameObject);
+			//return true;
+		}
+		else{
 		}
 	}
 
