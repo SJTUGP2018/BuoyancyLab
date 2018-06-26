@@ -34,6 +34,12 @@ public class BuoyancyApplier : MonoBehaviour {
 			buoyancyResultArrays.Add(calculators[i].resultArray);
 		}
         initialied = true;
+
+        BuoyancyVisualizer visualizer = GetComponent<BuoyancyVisualizer>();
+        if(visualizer)
+        {
+            visualizer.InitVisualizer(calculators, buoyancyResultArrays, rb);
+        }
 	}
 
 	void FixedUpdate()
@@ -62,13 +68,13 @@ public class BuoyancyApplier : MonoBehaviour {
                 // cancel out horizontal forces
                 Vector3 finalForce0 = new Vector3(0f, result.force0.y, 0f);
                 rb.AddForceAtPosition(finalForce0, result.origin0);
-                // Debug.DrawLine(result.origin0, result.origin0 + result.force0);
+                //Debug.DrawLine(result.origin0, result.origin0 + result.force0);
             }
             if (result.force1 != Vector3.zero)
             {
                 Vector3 finalForce1 = new Vector3(0f, result.force1.y, 0f);
                 rb.AddForceAtPosition(finalForce1, result.origin1);
-                // Debug.DrawLine(result.origin1, result.origin1 + result.force1);
+                //Debug.DrawLine(result.origin1, result.origin1 + result.force1);
             }
         }
     }
