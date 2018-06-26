@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OceanMeshSetter : MonoBehaviour {
 
-	public OceanHeightMap heightMap;
 	MeshFilter meshFilter;
 
 	// Use this for initialization
@@ -14,7 +13,7 @@ public class OceanMeshSetter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(heightMap.oceanMesh != null)
+		if(OceanManager.Instance.oceanMesh != null)
 		{
             meshFilter.sharedMesh = OceanManager.Instance.oceanMesh;
 		}
