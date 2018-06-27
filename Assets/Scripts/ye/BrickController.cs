@@ -50,6 +50,8 @@ public class BrickController : MonoBehaviour {
 
 	BoatInfo bi;
 
+	BrickInfo brickInfo;
+
 	void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -58,17 +60,15 @@ public class BrickController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		selectedBrick = brickList[0];
+		//brickInfo = selectedBrick.GetComponent<BrickInfo>();
 		InstantiateTest();
-		bi = boatTrans.GetComponent<BoatInfo>();
-		
-		//testBrick = Instantiate(selectedBrick);
-		//testBrick.GetComponent<Collider>().enabled = false;
-		
+		bi = boatTrans.GetComponent<BoatInfo>();	
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		dr = BrickDetect(transform);
+		//dr = BrickDetect(transform);
 
 		lr.SetPosition(0, transform.position);
 		lr.SetPosition(1, transform.position + transform.forward * maxDistance);
@@ -110,6 +110,7 @@ public class BrickController : MonoBehaviour {
 
 		if(device.GetPressDown(SteamVR_Controller.ButtonMask.Grip)){
 			ChangeBrickType();
+			ResetColor();
 			InstantiateTest();
 		}
 
@@ -118,8 +119,13 @@ public class BrickController : MonoBehaviour {
 		}
 
 		if(device.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu)){
-			DeleteDetect(transform);
+			//DeleteDetect(transform);
+			ChangeBrickInfo();
 		}
+		if(device.GetPressDown(SteamVR_Controller.ButtonMask.System)){
+			Debug.Log("system");
+		}
+
 
 		if(dr.detectable == true){		
 			testBrick.transform.position = dr.point;
@@ -132,29 +138,29 @@ public class BrickController : MonoBehaviour {
 			testMR.material = testMat;
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space)){
-			Debug.Log("here");
-			TryAndSetBrick();
-		}
+		// if(Input.GetKeyDown(KeyCode.Space)){
+		// 	Debug.Log("here");
+		// 	TryAndSetBrick();
+		// }
 
-		if(Input.GetKeyDown(KeyCode.Z)){
+		// if(Input.GetKeyDown(KeyCode.Z)){
 			
-			ChangeBrickType();
-			InstantiateTest();
-		}
+		// 	ChangeBrickType();
+		// 	InstantiateTest();
+		// }
 
-		if(Input.GetKeyDown(KeyCode.J)){
-			ChangeBrickDirection(ChangeType.yawUp);
-		}
-		else if(Input.GetKeyDown(KeyCode.L)){
-			ChangeBrickDirection(ChangeType.yawDown);
-		}
-		else if(Input.GetKeyDown(KeyCode.I)){
-			ChangeBrickDirection(ChangeType.pitchUp);
-		}
-		else if(Input.GetKeyDown(KeyCode.K)){
-			ChangeBrickDirection(ChangeType.pitchDown);
-		}
+		// if(Input.GetKeyDown(KeyCode.J)){
+		// 	ChangeBrickDirection(ChangeType.yawUp);
+		// }
+		// else if(Input.GetKeyDown(KeyCode.L)){
+		// 	ChangeBrickDirection(ChangeType.yawDown);
+		// }
+		// else if(Input.GetKeyDown(KeyCode.I)){
+		// 	ChangeBrickDirection(ChangeType.pitchUp);
+		// }
+		// else if(Input.GetKeyDown(KeyCode.K)){
+		// 	ChangeBrickDirection(ChangeType.pitchDown);
+		// }
 		
 
 		lastPos = testBrick.transform.position;
@@ -173,6 +179,7 @@ public class BrickController : MonoBehaviour {
 		testBrick.transform.position = transform.position + transform.forward * maxDistance;
 		bh = testBrick.GetComponent<BrickBehavior>();
 		testMR = testBrick.GetComponent<MeshRenderer>();
+		brickInfo = testBrick.GetComponent<BrickInfo>();
 	}
 
 	void TryAndSetBrick(){
@@ -181,8 +188,15 @@ public class BrickController : MonoBehaviour {
 				testMR.material = testMatOk;
 				GameObject newBrick = Instantiate(selectedBrick, dr.point, testBrick.transform.rotation, boatTrans);
 				
+				
+				newBrick.GetComponent<MeshRenderer>().material = brickInfo.mat; 
+				
+				//Debug.Log(brickInfo.mass);
+				newBrick.GetComponent<BrickInfo>().mass = brickInfo.mass;
+				//Debug.Log("new brick " + newBrick.GetComponent<BrickInfo>().mass);
 			}
 			else{
+				//Debug.Log(bh.CheckSettable() +" "+ (dr.detectable == true) +" "+ (bi.limit > bi.childNum()));
 				testMR.material = testMatFail;
 				//testBrick.GetComponent<MeshRenderer>().material = testMat;
 			}
@@ -201,6 +215,27 @@ public class BrickController : MonoBehaviour {
 		selectedBrick = brickList[index];
 	}
 
+	void ChangeBrickInfo(){
+		ChangeLineColor();
+		brickInfo.ChangeBrickInfo();
+	}
+
+	void ChangeLineColor(){
+		if(lr.endColor == Color.white){
+			lr.startColor = Color.blue;
+			lr.endColor = Color.blue;
+		}
+		else{
+			lr.startColor = Color.white;
+			lr.endColor = Color.white;
+		}
+	}
+
+	void ResetColor(){
+		lr.startColor = Color.white;
+		lr.endColor = Color.white;
+	}
+
 	void ChangeBrickDirection(ChangeType ct){
 		if(bh){
 			bh.RotateBrick(ct);
@@ -211,17 +246,23 @@ public class BrickController : MonoBehaviour {
 	DetectResult BrickDetect(Transform trans){
 		DetectResult detectResult = new DetectResult();
 		RaycastHit hit;
+		//Debug.Log("yeah");
 		if(Physics.Raycast(trans.position, trans.forward, out hit, Mathf.Infinity, layerMask)){
 			//Debug.Log("point: " + hit.point);
 			//Debug.Log("normal" + hit.normal);
 
-			if(hit.normal.x != (int)(hit.normal.x) || hit.normal.y != (int)(hit.normal.y) || hit.normal.z != (int)(hit.normal.z)){
+			//if(hit.normal.x != (int)(hit.normal.x) || hit.normal.y != (int)(hit.normal.y) || hit.normal.z != (int)(hit.normal.z)){
+			if(!HelperFunc.Equal(hit.normal.x,(int)(hit.normal.x)) || !HelperFunc.Equal(hit.normal.y,(int)(hit.normal.y)) || !HelperFunc.Equal(hit.normal.z,(int)(hit.normal.z))){
+
+				//Debug.Log("normalCheckFailed");
 				detectResult.point = new Vector3Int(0, 0, 0);
 				detectResult.detectable = false;
 				return detectResult;
 			}
 			else{
+				//Debug.Log("normal check ok");
 				setPoint = Hitpoint2Grid(hit.point, hit.normal);
+				//Debug.Log(setPoint);
 				intersectingCols = Physics.OverlapSphere(setPoint, 0.01f);
 				if(intersectingCols.Length == 0){
 					Debug.DrawLine(transform.position, setPoint, Color.red);

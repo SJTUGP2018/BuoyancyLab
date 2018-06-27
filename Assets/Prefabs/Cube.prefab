@@ -134,4 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbbef8bb0bc25c47a4ea9f091e69d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 600
+  mass: 500
+  mat: {fileID: 2100000, guid: 7dc28656896e0854fba7d2d4cb08fbc3, type: 2}
+  brickSOs:
+  - {fileID: 11400000, guid: 0351c7e6fbf158841a1074734ef95b0b, type: 2}
+  - {fileID: 11400000, guid: 3aff17785569d5b4fb61bf86b0bd5792, type: 2}
+  currentSO: {fileID: 0}

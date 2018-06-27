@@ -15,7 +15,7 @@ public class BuoyancyApplier : MonoBehaviour {
 
 	bool initialied = false;
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
 		initialied = false;
 		rb = GetComponent<Rigidbody>();
 		StartCoroutine(InitApplierIE());

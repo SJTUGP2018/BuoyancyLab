@@ -158,7 +158,7 @@ public class BrickBehavior : MonoBehaviour{
 		//Debug.Log(originPos + " " + direction+ " " + checkDistance);
 		if(Physics.Raycast(originPos, direction ,out hit, checkDistance)){
 
-			Debug.Log("here " + hit.transform.gameObject.name + hit.normal);
+			//Debug.Log("here " + hit.transform.gameObject.name + hit.normal);
 			if(Vector3.Normalize(hit.normal) == -Vector3.Normalize(direction)){		
 				return true;
 			}

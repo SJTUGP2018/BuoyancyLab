@@ -99,7 +99,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 0}
@@ -114,7 +114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbbef8bb0bc25c47a4ea9f091e69d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 300
+  mass: 125
+  mat: {fileID: 0}
+  brickSOs:
+  - {fileID: 11400000, guid: dca25a8e140438642a8d81d8d5c11e37, type: 2}
+  - {fileID: 11400000, guid: fe43c15951eeaef449766959e8d19165, type: 2}
+  centerOfMass: {x: 0, y: -0.17, z: -0.17}
 --- !u!114 &114131383608533154
 MonoBehaviour:
   m_ObjectHideFlags: 1

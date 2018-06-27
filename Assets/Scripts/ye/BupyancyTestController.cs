@@ -114,16 +114,20 @@ public class BupyancyTestController : MonoBehaviour {
 				if(res.castable != false){
 					res.resultObj.transform.position = transform.position + transform.forward * distance;
 					res.resultObj.transform.SetParent(transform);
-					Destroy(res.resultObj.GetComponent<BuoyancyApplier>());
+					//Destroy(res.resultObj.GetComponent<BuoyancyApplier>());
+
+
+					res.resultObj.GetComponent<BuoyancyApplier>().enabled = false;
 
 					rb = res.resultObj.GetComponent<Rigidbody>();
+					rb.useGravity = false;
 
-					srb.mass = rb.mass;
-					srb.drag = rb.drag;
-					srb.angularDrag = rb.angularDrag;
-					srb.useGravity = rb.useGravity;
+					//srb.mass = rb.mass;
+					//srb.drag = rb.drag;
+					//srb.angularDrag = rb.angularDrag;
+					//srb.useGravity = rb.useGravity;
 
-					Destroy(res.resultObj.GetComponent<Rigidbody>());
+					//Destroy(res.resultObj.GetComponent<Rigidbody>());
 
 					setLock = true;
 				}
@@ -132,16 +136,21 @@ public class BupyancyTestController : MonoBehaviour {
 				if(res.resultObj != null){
 		 			res.resultObj.transform.parent = null;
 
-					res.resultObj.AddComponent<Rigidbody>();
+					//res.resultObj.AddComponent<Rigidbody>();
 
 					rb = res.resultObj.GetComponent<Rigidbody>();
+					rb.useGravity = true;
 
-					rb.mass = srb.mass ;
-					rb.drag = srb.drag ;
-					rb.angularDrag = srb.angularDrag;
-					rb.useGravity = srb.useGravity;
+					//rb = res.resultObj.GetComponent<Rigidbody>();
 
-					res.resultObj.AddComponent<BuoyancyApplier>();
+					//rb.mass = srb.mass ;
+					//rb.drag = srb.drag ;
+					//rb.angularDrag = srb.angularDrag;
+					//rb.useGravity = srb.useGravity;
+
+					// res.resultObj.AddComponent<BuoyancyApplier>();
+					res.resultObj.GetComponent<BuoyancyApplier>().enabled = true;
+
 
 					setLock = false;
 		 		}

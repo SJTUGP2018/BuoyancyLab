@@ -8,9 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc83e4efc0d6cb9429cb6dbdcd0accdf, type: 3}
-  m_Name: rigidbodySetting
+  m_Script: {fileID: 11500000, guid: bd116b3d045794b419e0a9d8e80b5ee6, type: 3}
+  m_Name: PrismLight
   m_EditorClassIdentifier: 
-  drag: 5
-  angularDrag: 25
-  useGravity: 1
+  mass: 125
+  mat: {fileID: 2100000, guid: 4a6f68f57efbf1c4d9074c67f72aaa0f, type: 2}
