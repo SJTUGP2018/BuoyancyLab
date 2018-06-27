@@ -13,8 +13,10 @@ public class SineWaveOceanModifier : MonoBehaviour {
 
 	public Toggle directionToggle;
 
+	public ClampedFloatEditor oceanDensity;
+
 	public enum FieldName {
-		Scale = 0, Speed, LengthFactor
+		Scale = 0, Speed, LengthFactor, Density
 	};
 
 	public void InitGeneratorValues()
@@ -22,7 +24,6 @@ public class SineWaveOceanModifier : MonoBehaviour {
         generator.m_waveScale = waveScale.initValue;
 		generator.m_waveSpeed = waveSpeed.initValue;
 		generator.m_waveLengthFactor = (int)waveLengthFactor.initValue;
-
     }
 
 
@@ -33,7 +34,7 @@ public class SineWaveOceanModifier : MonoBehaviour {
 		// float[] initValues = {generator.m_waveScale, 
 		// 					  generator.m_waveSpeed, 
 		// 					  generator.m_waveLengthFactor};
-        ClampedFloatEditor[] editorList = {waveScale, waveSpeed, waveLengthFactor};
+        ClampedFloatEditor[] editorList = {waveScale, waveSpeed, waveLengthFactor, oceanDensity};
 
 		for(int i = 0; i < editorList.Length; ++i)
 		{
@@ -71,6 +72,7 @@ public class SineWaveOceanModifier : MonoBehaviour {
 			);
 		}
 		ChangeWaveDirection(true);
+		
 	}
 
 	void ChangeWaveDirection(bool isHorizontal)
@@ -104,6 +106,9 @@ public class SineWaveOceanModifier : MonoBehaviour {
 			case FieldName.LengthFactor:
 				generator.m_waveLengthFactor = (int)(targetValue);
                 SetTextValue(editor.text, editor.clamped.value, true);
+				break;
+			case FieldName.Density:
+				OceanManager.Instance.oceanDensity = targetValue;
 				break;
 		}
 		

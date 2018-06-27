@@ -15,6 +15,7 @@ public struct BuoyancyResult
     public Vector3 force1;
 }
 
+
 public class BuoyancyCalculator : MonoBehaviour {
 
     public int USE_RESULTANT_LIMIT = 100;
@@ -113,9 +114,9 @@ public class BuoyancyCalculator : MonoBehaviour {
 
 		managedResults = new BuoyancyResult[triCount];
 
-		if(triCount > USE_RESULTANT_LIMIT && USE_RESULTANT)
-			calculateTorques = true;
-		else
+		// if(triCount > USE_RESULTANT_LIMIT && USE_RESULTANT)
+		// 	calculateTorques = true;
+		// else
 			calculateTorques = false;
 
 		if(calculateTorques)
