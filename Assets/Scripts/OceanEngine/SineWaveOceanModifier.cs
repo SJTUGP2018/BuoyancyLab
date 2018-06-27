@@ -11,6 +11,8 @@ public class SineWaveOceanModifier : MonoBehaviour {
 	public ClampedFloatEditor waveSpeed;
 	public ClampedFloatEditor waveLengthFactor;
 
+	public Toggle directionToggle;
+
 	public enum FieldName {
 		Scale = 0, Speed, LengthFactor
 	};
@@ -62,6 +64,25 @@ public class SineWaveOceanModifier : MonoBehaviour {
 			}
 		}
 
+		if(directionToggle)
+		{
+			directionToggle.onValueChanged.AddListener(
+				(bool isHorizontal) => ChangeWaveDirection(isHorizontal)
+			);
+		}
+		ChangeWaveDirection(true);
+	}
+
+	void ChangeWaveDirection(bool isHorizontal)
+	{
+		if(isHorizontal)
+		{
+			generator.m_waveAngle = 90f;
+		}
+		else
+		{
+			generator.m_waveAngle = 0f;
+		}
 	}
 
 	void ChangeFloatValue(float targetValue, ClampedFloatEditor editor, FieldName name)
