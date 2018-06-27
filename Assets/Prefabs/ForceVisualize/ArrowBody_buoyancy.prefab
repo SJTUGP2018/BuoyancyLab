@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33282000001478684}
   - component: {fileID: 23495360902920430}
   m_Layer: 0
-  m_Name: UnitCylinder
+  m_Name: ArrowBody_buoyancy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841106025894036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.71, y: 0, z: 2.21}
+  m_LocalPosition: {x: 0.4650631, y: 0.6657362, z: 4.205658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: f1377fca8bcbbd040895fba1263e8200, type: 3}
+  - {fileID: 2100000, guid: e403354f2b2be3d4c8994f18d4410fb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

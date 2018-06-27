@@ -13,6 +13,9 @@ public class OceanManager : Singleton<OceanManager>
     protected OceanManager() { } 
 	
 	public OceanGenerator generator;
+
+	public float oceanDensity = 1027f;
+
 	public HeightMapDescriptor descriptor
 	{
 		get
