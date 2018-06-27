@@ -18,7 +18,7 @@ public class GravityVisualizer : MonoBehaviour {
 	Rigidbody rb;
 	Bounds rbBounds;
 
-	Vector3 gravityTargetPoint;
+//	Vector3 gravityTargetPoint;
 
 	Transform arrowBodyTrans;
 	Transform arrowHeadTrans;
@@ -27,7 +27,7 @@ public class GravityVisualizer : MonoBehaviour {
 	void OnEnable () 
 	{
 		rb = GetComponent<Rigidbody>();
-		gravityTargetPoint = rb.worldCenterOfMass;
+//		gravityTargetPoint = rb.worldCenterOfMass;
 
 		rbBounds = new Bounds();
 

@@ -104,7 +104,7 @@ public class BuoyancyCalculator : MonoBehaviour {
 			triangles = m_triangles,
 			localToWorldMatrix = transform.localToWorldMatrix,
             results = m_results,
-			rho = 1027f,
+			rho = OceanManager.Instance.oceanDensity,
 			gravity = 9.81f,
 
 			descriptor = OceanManager.Instance.descriptor,
