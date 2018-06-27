@@ -17,6 +17,9 @@ public struct BuoyancyResult
 
 public class BuoyancyCalculator : MonoBehaviour {
 
+    public int USE_RESULTANT_LIMIT = 100;
+	private const bool USE_RESULTANT = false;
+
 	[HideInInspector]
 	BuoyancyResult[] managedResults;
 	NativeArray<BuoyancyResult> m_results;
@@ -42,9 +45,24 @@ public class BuoyancyCalculator : MonoBehaviour {
 		}
 	}
 
+	public bool calculateTorques{
+		get; private set;
+	}
+
+	public Vector2[] torqueResultArray
+	{
+		get{
+			return managedtorqueResults;
+		}
+	}
+
+	NativeArray<Vector2> m_torqueResults;
+	Vector2[] managedtorqueResults;
+
 	JobHandle handle;
 
     CalculateBuoyancyJob cbjob;
+    SumTorqueJob stjob;
 
 
 	// public OceanHeightMap ocm;
@@ -94,6 +112,18 @@ public class BuoyancyCalculator : MonoBehaviour {
         m_results = new NativeArray<BuoyancyResult>(triCount, Allocator.Persistent);
 
 		managedResults = new BuoyancyResult[triCount];
+
+		if(triCount > USE_RESULTANT_LIMIT && USE_RESULTANT)
+			calculateTorques = true;
+		else
+			calculateTorques = false;
+
+		if(calculateTorques)
+		{
+            m_torqueResults = new NativeArray<Vector2>(triCount, Allocator.Persistent);
+            managedtorqueResults = new Vector2[triCount];
+        }
+        
 	}
 	
 	// Update is called once per frame
@@ -112,19 +142,35 @@ public class BuoyancyCalculator : MonoBehaviour {
 		};
 
 		handle = cbjob.Schedule(triCount, 64, OceanManager.Instance.heightMapHandle);
+
+		if(calculateTorques)
+		{
+			stjob = new SumTorqueJob()
+			{
+                buoyancyResults = m_results,
+				torqueResults = m_torqueResults,
+			};
+			handle = stjob.Schedule(triCount, 32, handle);
+		}
 		
 	}
 
 	void LateUpdate()
 	{
 		handle.Complete();
+        
 	}
 
 	void FixedUpdate()
 	{
-//		Debug.Log("in FixedUpdate!");
+        //		Debug.Log("in FixedUpdate!");
         m_results.CopyTo(managedResults);
-	}
+
+		if(calculateTorques)
+		{
+            m_torqueResults.CopyTo(managedtorqueResults);
+		}
+    }
 
 
 	
@@ -328,6 +374,42 @@ public class BuoyancyCalculator : MonoBehaviour {
 
     }
 
+	struct SumTorqueJob : IJobParallelFor
+	{
+		[ReadOnly]
+        public NativeArray<BuoyancyResult> buoyancyResults;
+		[WriteOnly]
+		public NativeArray<Vector2> torqueResults;
+
+		public void Execute(int index)
+		{
+			Vector2 torqueSum = Vector2.zero;
+
+            // cancel out horizontal forces
+			float force0Y = buoyancyResults[index].force0.y;
+			torqueSum.x -= force0Y * buoyancyResults[index].origin0.z;
+			torqueSum.y += force0Y * buoyancyResults[index].origin0.x;
+
+            float force1Y = buoyancyResults[index].force1.y;
+            torqueSum.x -= force1Y * buoyancyResults[index].origin1.z;
+            torqueSum.y += force1Y * buoyancyResults[index].origin1.x;
+
+            // Vector3 finalForce0 = buoyancyResults[index].force0;
+			// finalForce0.x = finalForce0.z = 0f;
+
+            // torqueSum += Vector3.Cross(buoyancyResults[index].origin0, finalForce0);
+
+            
+        	// // cancel out horizontal forces
+            // Vector3 finalForce1 = buoyancyResults[index].force1;
+            // finalForce1.x = finalForce1.z = 0f;
+
+            // torqueSum += Vector3.Cross(buoyancyResults[index].origin1, finalForce1);
+
+			torqueResults[index] = torqueSum;
+		}
+	} 
+
 	private void OnDisable()
 	{
 
@@ -338,5 +420,8 @@ public class BuoyancyCalculator : MonoBehaviour {
         m_results.Dispose();
 		m_vertices.Dispose();
 		m_triangles.Dispose();
+
+		if(calculateTorques)
+			m_torqueResults.Dispose();
     }
 }
