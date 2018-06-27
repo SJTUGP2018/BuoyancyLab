@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class BuoyancyVisualizer : MonoBehaviour {
 	/// Assume using unit cylinder as body.
-	public GameObject arrowBody;
-	public GameObject arrowHead;
+	public ForceVisualizerProps props;
 
-    public float gravityReferenceLength = 5f;
-	public float diameterFactor = 0.1f;
-	public float arrowHeadFactor = 0.2f;
-	public Vector3 arrowHeadComponentFactor = 
-		(Vector3.up + Vector3.forward + Vector3.right);
+	GameObject arrowBody{
+		get{
+			return props.arrowBody;
+		}
+	}
+	GameObject arrowHead{
+		get{
+			return props.arrowHead;
+		}
+	}
+
+    float gravityReferenceLength{
+		get{
+			return props.gravityReferenceLength;
+		}
+	}
+	float diameterFactor{
+		get{
+			return props.diameterFactor;
+		}
+	}
+	float arrowHeadFactor {
+		get{
+			return props.arrowHeadFactor;
+		}
+	}
+	Vector3 arrowHeadComponentFactor {
+		get{
+			return props.arrowHeadComponentFactor;
+		}
+	}
 
     List<BuoyancyCalculator> calculators;
     List<BuoyancyResult[]> buoyancyResultArrays;

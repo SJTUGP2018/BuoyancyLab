@@ -16,7 +16,6 @@ public class GravityVisualizer : MonoBehaviour {
 	Vector3 arrowHeadScale;
 
 	Rigidbody rb;
-	Bounds rbBounds;
 
 //	Vector3 gravityTargetPoint;
 
@@ -28,15 +27,6 @@ public class GravityVisualizer : MonoBehaviour {
 	{
 		rb = GetComponent<Rigidbody>();
 //		gravityTargetPoint = rb.worldCenterOfMass;
-
-		rbBounds = new Bounds();
-
-		Collider[] colliders = GetComponentsInChildren<Collider>();
-
-		foreach(Collider coll in colliders)
-		{
-			rbBounds.Encapsulate(coll.bounds);
-		}
 
 
 		GameObject arrowBodyGO = Instantiate(arrowBodyPrefab, transform.position, 
