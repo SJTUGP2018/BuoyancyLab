@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: CubeLight
   m_EditorClassIdentifier: 
   mass: 500
-  mat: {fileID: 2100000, guid: 45dea3eeac02cd644a3fb06a9dcab9f1, type: 2}
+  mat: {fileID: 2100000, guid: 120d1cb0b064bc044857f311cbe5bcbc, type: 2}

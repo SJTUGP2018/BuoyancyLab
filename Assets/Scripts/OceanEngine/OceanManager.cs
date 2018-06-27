@@ -46,6 +46,11 @@ public class OceanManager : Singleton<OceanManager>
 		}
 	}
 
+	void Awake()
+	{
+		DontDestroyOnLoad(this.gameObject);
+	}
+
     void Update () {
 		generator.UpdateOcean(Time.time);
 	}

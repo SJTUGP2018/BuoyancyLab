@@ -45,6 +45,7 @@ public abstract class OceanGenerator : ScriptableObject {
 	protected virtual void OnDisable()
 	{
 		DestroyOcean();
+		m_heightMap.Dispose();
 	}
 
 }

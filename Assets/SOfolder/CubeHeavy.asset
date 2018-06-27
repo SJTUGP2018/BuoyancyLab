@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: CubeHeavy
   m_EditorClassIdentifier: 
   mass: 2000
-  mat: {fileID: 2100000, guid: 7dc28656896e0854fba7d2d4cb08fbc3, type: 2}
+  mat: {fileID: 2100000, guid: 374ef1e501b0b3347914b017f7adfea5, type: 2}

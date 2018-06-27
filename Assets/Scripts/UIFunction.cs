@@ -23,13 +23,26 @@ public class UIFunction : MonoBehaviour {
 
 	public GameObject testObj;
 
+	public GameObject suc;
+
+	public GameObject fail;
+
+	public float goalTime = 5;
+
+	public float failHeight = -2f;
+
+	float timeStart;
+
 	// Use this for initialization
 	void Start () {
 		boatInfo = boat.GetComponent<BoatInfo>();
 		bv = boat.GetComponent<BuoyancyVisualizer>();
 		gv = boat.GetComponent<GravityVisualizer>();
-		originObjPos = testObj.transform.position;
-		originObjRot = testObj.transform.rotation;
+		
+		if(testObj){
+			originObjPos = testObj.transform.position;
+			originObjRot = testObj.transform.rotation;
+		}
 	}
 	
 	// Update is called once per frame
@@ -92,13 +105,35 @@ public class UIFunction : MonoBehaviour {
 	}
 
 	public void Test(){
+		timeStart = Time.timeSinceLevelLoad;
 		SaveAndCalc();
 		ReleaseTest(testObj);
+		StartCoroutine(TestIE());
 	}
 
 	public void TestReset(){
 		Reset();
 		ResetTest(testObj);
+		StopAllCoroutines();
+		suc.SetActive(false);
+		fail.SetActive(false);
 	}
 
+	IEnumerator TestIE(){
+		while(Time.timeSinceLevelLoad - timeStart < goalTime){
+			if(testObj.transform.position.y < failHeight){
+				fail.SetActive(true);
+				yield return null;
+				//StopAllCoroutines();
+			}
+			else{
+				yield return null;
+			}
+		}
+		if(fail.activeInHierarchy == false){
+			suc.SetActive(true);
+		}
+		
+	}
+	
 }

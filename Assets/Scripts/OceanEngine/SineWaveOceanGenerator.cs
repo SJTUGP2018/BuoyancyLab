@@ -74,7 +74,7 @@ public class SineWaveOceanGenerator : OceanGenerator {
 
     public override void DestroyOcean()
     {
-        m_heightMap.Dispose();
+        // m_heightMap.Dispose();
     }
 
     struct GenerateHeightMapJob : IJobParallelFor

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: PrismHeavy
   m_EditorClassIdentifier: 
   mass: 500
-  mat: {fileID: 2100000, guid: a9723b6230b9f2e46bb2e41420efd92e, type: 2}
+  mat: {fileID: 2100000, guid: 374ef1e501b0b3347914b017f7adfea5, type: 2}

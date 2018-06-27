@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: PrismLight
   m_EditorClassIdentifier: 
   mass: 125
-  mat: {fileID: 2100000, guid: 4a6f68f57efbf1c4d9074c67f72aaa0f, type: 2}
+  mat: {fileID: 2100000, guid: 120d1cb0b064bc044857f311cbe5bcbc, type: 2}
