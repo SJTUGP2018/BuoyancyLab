@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 114749655545568444}
   - component: {fileID: 64857142880542904}
   - component: {fileID: 114369384175263918}
+  - component: {fileID: 114513338125278126}
+  - component: {fileID: 114068552800250816}
   m_Layer: 8
   m_Name: Prism
   m_TagString: Brick
@@ -101,6 +103,18 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 0}
+--- !u!114 &114068552800250816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927044251168630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbbef8bb0bc25c47a4ea9f091e69d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 300
 --- !u!114 &114131383608533154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,6 +140,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkDistance: 1.5
   bt: 1
+--- !u!114 &114513338125278126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927044251168630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50eea295235a61849a0d6fdf5d42c370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114749655545568444
 MonoBehaviour:
   m_ObjectHideFlags: 1

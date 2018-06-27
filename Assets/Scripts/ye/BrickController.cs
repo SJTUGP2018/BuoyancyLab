@@ -46,6 +46,10 @@ public class BrickController : MonoBehaviour {
 	SteamVR_TrackedObject trackedObj;
 	public LineRenderer lr;
 
+	Collider[] intersectingCols;
+
+	BoatInfo bi;
+
 	void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -55,6 +59,7 @@ public class BrickController : MonoBehaviour {
 	void Start () {
 		selectedBrick = brickList[0];
 		InstantiateTest();
+		bi = boatTrans.GetComponent<BoatInfo>();
 		
 		//testBrick = Instantiate(selectedBrick);
 		//testBrick.GetComponent<Collider>().enabled = false;
@@ -172,7 +177,7 @@ public class BrickController : MonoBehaviour {
 
 	void TryAndSetBrick(){
 		if(bh){
-			if(bh.CheckSettable() && dr.detectable == true){
+			if(bh.CheckSettable() && dr.detectable == true && bi.limit > bi.childNum()){
 				testMR.material = testMatOk;
 				GameObject newBrick = Instantiate(selectedBrick, dr.point, testBrick.transform.rotation, boatTrans);
 				
@@ -217,12 +222,19 @@ public class BrickController : MonoBehaviour {
 			}
 			else{
 				setPoint = Hitpoint2Grid(hit.point, hit.normal);
-				Debug.DrawLine(transform.position, setPoint, Color.red);
-				detectResult.point = setPoint;
-				detectResult.detectable = true;
-				return detectResult;
-			}
-			
+				intersectingCols = Physics.OverlapSphere(setPoint, 0.01f);
+				if(intersectingCols.Length == 0){
+					Debug.DrawLine(transform.position, setPoint, Color.red);
+					detectResult.point = setPoint;
+					detectResult.detectable = true;
+					return detectResult;
+				}
+				else{
+					detectResult.point = new Vector3Int(0, 0, 0);
+					detectResult.detectable = false;
+					return detectResult;
+				}			
+			}	
 			//return true;
 		}
 		else{
