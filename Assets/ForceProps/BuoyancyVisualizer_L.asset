@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BuoyancyVisualizer_L
+  m_EditorClassIdentifier: Assembly-CSharp::ForceVisualizerProps
+  arrowBody: {fileID: 1841106025894036, guid: 0f8c9fc578172784ea1e775c620b58bb, type: 2}
+  arrowHead: {fileID: 1896426676473020, guid: d79fe2a861661f94383829ef43458b03, type: 2}
+  gravityReferenceLength: 20
+  diameterFactor: 0.2
+  arrowHeadFactor: 0.3
+  arrowHeadComponentFactor: {x: 1.3, y: 1, z: 1.3}

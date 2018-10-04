@@ -13,7 +13,7 @@ public class BuoyancyApplier : MonoBehaviour {
 
 	Rigidbody rb;
 
-
+    public float resultantForceY;
 
 	bool initialied = false;
 	// Use this for initialization
@@ -62,6 +62,7 @@ public class BuoyancyApplier : MonoBehaviour {
 		// 		ApplyResultantForce(resultArray);
 		// 	}
 		// }
+        resultantForceY = 0f;
         for(int i = 0; i < buoyancyResultArrays.Count; ++i)
         {
             if(!hasTorqueSumArray[i])
@@ -92,12 +93,16 @@ public class BuoyancyApplier : MonoBehaviour {
                 // cancel out horizontal forces
                 Vector3 finalForce0 = new Vector3(0f, result.force0.y, 0f);
                 rb.AddForceAtPosition(finalForce0, result.origin0);
+
+                resultantForceY += result.force0.y;
                 //Debug.DrawLine(result.origin0, result.origin0 + result.force0);
             }
             if (result.force1 != Vector3.zero)
             {
                 Vector3 finalForce1 = new Vector3(0f, result.force1.y, 0f);
                 rb.AddForceAtPosition(finalForce1, result.origin1);
+
+                resultantForceY += result.force0.y;
                 //Debug.DrawLine(result.origin1, result.origin1 + result.force1);
             }
         }
@@ -190,6 +195,8 @@ public class BuoyancyApplier : MonoBehaviour {
             }
 
             rb.AddForceAtPosition(resultantForce, resultantOrigin);
+
+            resultantForceY = resultantForce.y;
         }
     }
 
@@ -284,6 +291,8 @@ public class BuoyancyApplier : MonoBehaviour {
             }
 
             rb.AddForceAtPosition(resultantForce, resultantOrigin);
+
+            resultantForceY = resultantForce.y;
         }
     }
 
