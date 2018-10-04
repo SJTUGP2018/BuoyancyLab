@@ -57,6 +57,10 @@ namespace BoatTutorial
             //Get all triangles
             List<TriangleData> underWaterTriangleData = modifyBoatMesh.underWaterTriangleData;
 
+
+            // for visualizing
+            List<ForceOriginPair> forceOriginPairs = new List<ForceOriginPair>(underWaterTriangleData.Count);
+
             for (int i = 0; i < underWaterTriangleData.Count; i++)
             {
                 //This triangle
@@ -68,15 +72,19 @@ namespace BoatTutorial
                 //Add the force to the boat
                 boatRB.AddForceAtPosition(buoyancyForce, triangleData.center);
 
+                forceOriginPairs.Add(new ForceOriginPair(buoyancyForce, triangleData.center));
 
                 //Debug
 
                 //Normal
-                Debug.DrawRay(triangleData.center, triangleData.normal * 3f, Color.white);
+                // Debug.DrawRay(triangleData.center, triangleData.normal * 3f, Color.white);
 
                 //Buoyancy
-                Debug.DrawRay(triangleData.center, buoyancyForce.normalized * -3f, Color.blue);
+                // Debug.DrawRay(triangleData.center, buoyancyForce.normalized * -3f, Color.blue);
             }
+            
+            gameObject.SendMessage("VisualizeForce", forceOriginPairs, SendMessageOptions.DontRequireReceiver);
+            
         }
 
         //The buoyancy force so the boat can float

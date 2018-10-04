@@ -17,17 +17,23 @@ public class WaterController : MonoBehaviour
     public float noiseStrength = 1f;
     public float noiseWalk = 1f;
 
+    public float waveAngle;
+    Vector2 waveDirection;
+
     Mesh waterMesh;
 
     void Start()
     {
         current = this;
         waterMesh = GetComponent<MeshFilter>().mesh;
+
+        waveDirection = new Vector2(Mathf.Cos(waveAngle * Mathf.Deg2Rad), Mathf.Sin(waveAngle * Mathf.Deg2Rad));
     }
 
     void Update()
     {
         ModifyMesh();
+        waveDirection = new Vector2(Mathf.Cos(waveAngle * Mathf.Deg2Rad), Mathf.Sin(waveAngle * Mathf.Deg2Rad));
     }
 
     public static float SinXWave(
@@ -37,7 +43,8 @@ public class WaterController : MonoBehaviour
         float waveDistance,
         float noiseStrength,
         float noiseWalk,
-        float timeSinceStart)
+        float timeSinceStart,
+        Vector2 waveDirection)
     {
         float x = position.x;
         float y = 0f;
@@ -48,7 +55,9 @@ public class WaterController : MonoBehaviour
         //x + y + z rolling waves
         //x * z produces a moving sea without rolling waves
 
-        float waveType = z;
+        // float waveType = z;
+        Vector2 xz = new Vector2(x, z);
+        float waveType = Vector2.Dot(xz, waveDirection);
 
         y += Mathf.Sin((timeSinceStart * speed + waveType) / waveDistance) * scale;
 
@@ -63,7 +72,8 @@ public class WaterController : MonoBehaviour
     {
         if (isMoving)
         {
-        return SinXWave(position, speed, scale, waveDistance, noiseStrength, noiseWalk, timeSinceStart);
+        return SinXWave(position, speed, scale, waveDistance, noiseStrength, noiseWalk, timeSinceStart,
+                    waveDirection);
         }
         else
         {
